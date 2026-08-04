@@ -1,270 +1,146 @@
-# Test Plan: SCRUM-101 – W3 Home Page Navigation
+# W3 IBM Home Page Navigation Test Plan
 
-**Version:** 1.0  
-**Date:** 2026-08-04  
-**Author:** QA Agent (Bob)  
-**Application:** W3 IBM Internal Portal  
-**URL:** https://w3.ibm.com/  
-**Test Credentials:** `rajith.pv@in.ibm.com` / `pws`
+## Application Overview
 
----
+Test plan for SCRUM-101: W3 IBM Home Page Tab Navigation. The application under test is the IBM internal W3 home page (https://w3.ibm.com/). An authenticated IBM employee navigates through five main tabs (People, News, Apps, IT Support, AskIBM) and verifies each tab loads correctly with an appropriate wait time. Tests cover happy-path navigation, page-load validation, element visibility, and cross-browser compatibility.
+
+## Test Scenarios
+
+### 1. AC1 - W3 Home Page Tab Navigation
+
+**Seed:** `tests/seed.spec.ts`
+
+#### 1.1. TC01 - Verify W3 home page loads successfully after login
+
+**File:** `tests/w3-test_script/tc01-homepage-load.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ and restore authentication state from .playwright-mcp/w3-auth-state.json
+    - expect: The W3 IBM home page loads without redirecting to the login page
+    - expect: The page title contains 'w3' or 'IBM'
+    - expect: The main navigation tabs are visible
+  2. Verify the navigation bar is visible and contains the expected tabs
+    - expect: Navigation tabs People, News, Apps, IT Support, and AskIBM are all visible in the navigation bar
+
+#### 1.2. TC02 - Navigate to People tab and verify content loads
+
+**File:** `tests/w3-test_script/tc02-people-tab.spec.ts`
 
-## 1. Overview
-
-This test plan covers the navigation flow across the W3 IBM internal home page as defined in user story SCRUM-101. An IBM employee, once authenticated, should be able to click through all five primary navigation tabs — People, News, Apps, IT Support, and AskIBM — and verify that each page loads correctly.
-
----
-
-## 2. Application Exploration Findings
-
-From browser exploration the following key facts were discovered:
-
-| Finding | Detail |
-|---------|--------|
-| Authentication | SSO via `login.w3.ibm.com` (FIDO2/w3id) — browser session already authenticated |
-| Navigation Type | Sidebar menu toggled by **"Open menu"** button (`button[aria-label="Open menu"]`) |
-| Hash Routing | SPA using `#/people`, `#/news`, `#/apps`, `#/support`, `#/` for AskIBM (home) |
-| Page Titles | People, News, Apps - Recommended, IT Support, Home |
-| AskIBM | Lives on the default Home page (`#/`) as the primary widget |
-| Console Warnings | 52–134 warnings (non-blocking); 3 console errors (non-critical, third-party auth) |
-| Mobile Nav | Navigation labels exposed via `navigation[aria-label="Mobile Navigation"]` |
-
----
-
-## 3. Test Scope
-
-### In Scope
-- Navigation to all five tabs: People, News, Apps, IT Support, AskIBM
-- Page title verification after navigation
-- URL hash change verification
-- Visible content loaded confirmation
-- Home page load verification
-
-### Out of Scope
-- Login / authentication testing
-- Content accuracy within each tab
-- Performance / load time benchmarking
-
----
-
-## 4. Test Suites and Test Cases
-
----
-
-### Suite 1: Home Page Load
-
-#### TC-001: Verify W3 Home Page Loads Successfully
-
-**Priority:** Critical  
-**Type:** Smoke / Happy Path
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Navigate to `https://w3.ibm.com/` | Page loads without errors |
-| 2 | Verify page URL | URL contains `https://w3.ibm.com` |
-| 3 | Verify page title | Title is "Home" |
-| 4 | Verify W3 logo / banner is visible | `banner[aria-label="w3"]` is present |
-| 5 | Verify Open menu button is visible | `button[aria-label="Open menu"]` is visible |
-| 6 | Verify AskIBM widget is on page | Heading "AskIBM" visible in main content |
-
----
-
-### Suite 2: Tab Navigation – Happy Path
-
-#### TC-002: Navigate to People Tab
-
-**Priority:** High  
-**Type:** Happy Path  
-**AC:** AC1
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Navigate to `https://w3.ibm.com/` | Home page loads |
-| 2 | Click **"Open menu"** button | Navigation sidebar opens |
-| 3 | Click **"People"** link in sidebar | Page navigates to `#/people` |
-| 4 | Verify URL hash | URL hash is `#/people` |
-| 5 | Verify page title | Title is "People" |
-| 6 | Verify main content loaded | People page content is visible |
-| 7 | Wait 3 seconds | Page remains stable |
-
----
-
-#### TC-003: Navigate to News Tab
-
-**Priority:** High  
-**Type:** Happy Path  
-**AC:** AC1
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Start from Home page | Home page loaded |
-| 2 | Click **"Open menu"** button | Sidebar opens |
-| 3 | Click **"News"** link in sidebar | Navigates to `#/news` |
-| 4 | Verify URL hash | URL hash is `#/news` |
-| 5 | Verify page title | Title is "News" |
-| 6 | Verify news articles are visible | News content is present |
-| 7 | Wait 3 seconds | Page remains stable |
-
----
-
-#### TC-004: Navigate to Apps Tab
-
-**Priority:** High  
-**Type:** Happy Path  
-**AC:** AC1
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Start from Home page | Home page loaded |
-| 2 | Click **"Open menu"** button | Sidebar opens |
-| 3 | Click **"Apps"** button in sidebar | Navigates to `#/apps` |
-| 4 | Verify URL hash | URL hash is `#/apps` |
-| 5 | Verify page title | Title contains "Apps" |
-| 6 | Verify apps content loaded | Apps page content visible |
-| 7 | Wait 3 seconds | Page remains stable |
-
----
-
-#### TC-005: Navigate to IT Support Tab
-
-**Priority:** High  
-**Type:** Happy Path  
-**AC:** AC1
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Start from Home page | Home page loaded |
-| 2 | Click **"Open menu"** button | Sidebar opens |
-| 3 | Click **"IT Support"** link in sidebar | Navigates to `#/support` |
-| 4 | Verify URL hash | URL hash is `#/support` |
-| 5 | Verify page title | Title is "IT Support" |
-| 6 | Verify IT support content loaded | IT Support page content visible |
-| 7 | Wait 3 seconds | Page remains stable |
-
----
-
-#### TC-006: Navigate to AskIBM Tab
-
-**Priority:** High  
-**Type:** Happy Path  
-**AC:** AC1
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Start from any tab page | Different tab page loaded |
-| 2 | Click **"Open menu"** button | Sidebar opens |
-| 3 | Click **"AskIBM"** button in sidebar | Navigates back to `#/` |
-| 4 | Verify URL | URL is `https://w3.ibm.com/#/` or `https://w3.ibm.com/` |
-| 5 | Verify page title | Title is "Home" |
-| 6 | Verify AskIBM widget visible | Heading "AskIBM" is visible |
-| 7 | Wait 3 seconds | Page remains stable |
-
----
-
-### Suite 3: Full Sequential Navigation Flow
-
-#### TC-007: Complete Sequential Tab Navigation (AC1 End-to-End)
-
-**Priority:** Critical  
-**Type:** End-to-End / Happy Path  
-**AC:** AC1 (full)
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Navigate to `https://w3.ibm.com/` | Home page loads, title "Home" |
-| 2 | Navigate to People tab (via hash `#/people`) | Title "People", URL `#/people` |
-| 3 | Wait 3 seconds | Page stable |
-| 4 | Navigate to News tab (via hash `#/news`) | Title "News", URL `#/news` |
-| 5 | Wait 3 seconds | Page stable |
-| 6 | Navigate to Apps tab (via hash `#/apps`) | Title contains "Apps", URL `#/apps` |
-| 7 | Wait 3 seconds | Page stable |
-| 8 | Navigate to IT Support tab (via hash `#/support`) | Title "IT Support", URL `#/support` |
-| 9 | Wait 3 seconds | Page stable |
-| 10 | Navigate to AskIBM (via hash `#/`) | Title "Home", AskIBM widget visible |
-| 11 | Wait 3 seconds | Page stable |
-
----
-
-### Suite 4: Navigation UI Validation
-
-#### TC-008: Verify Navigation Menu Opens and Closes
-
-**Priority:** Medium  
-**Type:** UI Validation
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Navigate to home page | Home page loads |
-| 2 | Verify "Open menu" button visible | Button is clickable |
-| 3 | Click "Open menu" | Navigation sidebar becomes visible |
-| 4 | Verify all 5 navigation items present | People, News, Apps, IT Support, AskIBM visible |
-| 5 | Click "Open menu" again to close | Sidebar closes / collapses |
-
----
-
-#### TC-009: Verify Home Navigation Item Active State
-
-**Priority:** Low  
-**Type:** UI Validation
-
-| Step | Action | Expected Result |
-|------|--------|-----------------|
-| 1 | Navigate to `#/people` | People tab active |
-| 2 | Open menu | Navigation sidebar opens |
-| 3 | Verify "People" link has active indicator | `[active]` attribute present on People link |
-
----
-
-## 5. Test Data
-
-| Parameter | Value |
-|-----------|-------|
-| Application URL | `https://w3.ibm.com/` |
-| People URL | `https://w3.ibm.com/#/people` |
-| News URL | `https://w3.ibm.com/#/news` |
-| Apps URL | `https://w3.ibm.com/#/apps` |
-| IT Support URL | `https://w3.ibm.com/#/support` |
-| AskIBM URL | `https://w3.ibm.com/#/` |
-| Username | `rajith.pv@in.ibm.com` |
-| Password | `pws` |
-
----
-
-## 6. Element Locator Reference
-
-Discovered during exploratory testing:
-
-| Element | Selector Strategy |
-|---------|------------------|
-| Open Menu Button | `page.getByRole('button', { name: 'Open menu' })` |
-| People Link | `page.getByRole('link', { name: 'People' })` |
-| News Link | `page.getByRole('link', { name: 'News' })` |
-| Apps Button | `page.getByRole('button', { name: 'Apps' })` |
-| IT Support Link | `page.getByRole('link', { name: 'IT Support' })` |
-| AskIBM Button (sidebar) | `navigation[aria-label="Mobile Navigation"] >> button:has-text("AskIBM")` |
-| AskIBM Widget Heading | `page.getByRole('heading', { name: 'AskIBM', level: 1 })` |
-| Main Banner | `page.getByRole('banner', { name: 'w3' })` |
-
-**Note:** Navigation is a hash-based SPA. For automation, `page.evaluate(() => window.location.hash = '#/route')` or `page.goto('https://w3.ibm.com/#/route')` are the most reliable navigation strategies.
-
----
-
-## 7. Pass/Fail Criteria
-
-| Criteria | Definition |
-|----------|------------|
-| PASS | All assertions met; URL, title, and key content visible |
-| FAIL | Any assertion fails; page does not load; element not found |
-| BLOCKED | Authentication session expired; network error |
-
----
-
-## 8. Test Environment
-
-| Component | Detail |
-|-----------|--------|
-| Browser | Chromium (primary), Firefox |
-| Playwright version | 1.62.1 |
-| OS | Windows 10 |
-| Base URL | `https://w3.ibm.com/` |
-| Auth Method | Pre-authenticated session (browser state) |
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ with authentication state restored
+    - expect: Home page loads successfully and navigation tabs are visible
+  2. Click on the 'People' tab in the navigation bar
+    - expect: The People tab is clicked and becomes active/highlighted
+    - expect: The URL or page content changes to reflect the People section
+  3. Wait 30 seconds for the People tab content to fully load
+    - expect: People tab content is fully loaded after 30 seconds
+    - expect: People-related content (employee search, org chart, or directory) is visible
+
+#### 1.3. TC03 - Navigate to News tab and verify content loads
+
+**File:** `tests/w3-test_script/tc03-news-tab.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ with authentication state restored
+    - expect: Home page loads successfully
+  2. Click on the 'News' tab in the navigation bar
+    - expect: The News tab is clicked and becomes active/highlighted
+    - expect: The URL or page content changes to reflect the News section
+  3. Wait 30 seconds for the News tab content to fully load
+    - expect: News tab content is fully loaded
+    - expect: News articles or headlines are visible on the page
+
+#### 1.4. TC04 - Navigate to Apps tab and verify content loads
+
+**File:** `tests/w3-test_script/tc04-apps-tab.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ with authentication state restored
+    - expect: Home page loads successfully
+  2. Click on the 'Apps' tab in the navigation bar
+    - expect: The Apps tab is clicked and becomes active/highlighted
+    - expect: The URL or page content changes to reflect the Apps section
+  3. Wait 30 seconds for the Apps tab content to fully load
+    - expect: Apps tab content is fully loaded
+    - expect: Application tiles or links are visible
+
+#### 1.5. TC05 - Navigate to IT Support tab and verify content loads
+
+**File:** `tests/w3-test_script/tc05-itsupport-tab.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ with authentication state restored
+    - expect: Home page loads successfully
+  2. Click on the 'IT Support' tab in the navigation bar
+    - expect: The IT Support tab is clicked and becomes active/highlighted
+    - expect: The URL or page content changes to reflect the IT Support section
+  3. Wait 30 seconds for the IT Support tab content to fully load
+    - expect: IT Support tab content is fully loaded
+    - expect: IT support options, help desk links, or service catalog is visible
+
+#### 1.6. TC06 - Navigate to AskIBM tab and verify content loads
+
+**File:** `tests/w3-test_script/tc06-askibm-tab.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ with authentication state restored
+    - expect: Home page loads successfully
+  2. Click on the 'AskIBM' tab in the navigation bar
+    - expect: The AskIBM tab is clicked and becomes active/highlighted
+    - expect: The URL or page content changes to reflect the AskIBM section
+  3. Wait 30 seconds for the AskIBM tab content to fully load
+    - expect: AskIBM tab content is fully loaded
+    - expect: AskIBM chatbot or search interface is visible
+
+#### 1.7. TC07 - Complete sequential tab navigation flow (AC1 full scenario)
+
+**File:** `tests/w3-test_script/tc07-full-navigation-flow.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ with authentication state restored and verify home page is loaded
+    - expect: W3 home page loads and all 5 navigation tabs are visible
+  2. Click People tab and wait 30 seconds
+    - expect: People tab content loads within 30 seconds
+  3. Click News tab and wait 30 seconds
+    - expect: News tab content loads within 30 seconds
+  4. Click Apps tab and wait 30 seconds
+    - expect: Apps tab content loads within 30 seconds
+  5. Click IT Support tab and wait 30 seconds
+    - expect: IT Support tab content loads within 30 seconds
+  6. Click AskIBM tab and wait 30 seconds
+    - expect: AskIBM tab content loads within 30 seconds
+
+#### 1.8. TC08 - Verify unauthenticated access redirects to login
+
+**File:** `tests/w3-test_script/tc08-unauthenticated-access.spec.ts`
+
+**Steps:**
+  1. Open a fresh browser session with no authentication state and navigate to https://w3.ibm.com/
+    - expect: The page redirects to the IBM w3id login page
+    - expect: Login form is displayed with username and password fields
+  2. Verify the login page URL contains 'login.w3.ibm.com' or similar
+    - expect: URL confirms the user was redirected to the IBM authentication service
+
+#### 1.9. TC09 - Verify navigation tabs are accessible via keyboard
+
+**File:** `tests/w3-test_script/tc09-keyboard-navigation.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ with authentication state restored
+    - expect: Home page loads successfully
+  2. Use Tab key to focus on the navigation area and navigate through tabs using keyboard
+    - expect: Each navigation tab receives focus in order
+    - expect: Focused tab has a visible focus indicator
+  3. Press Enter on a focused tab to activate it
+    - expect: The tab activates and its content loads, same as clicking with a mouse
+
+#### 1.10. TC10 - Verify page title and basic metadata for each tab
+
+**File:** `tests/w3-test_script/tc10-page-metadata.spec.ts`
+
+**Steps:**
+  1. Navigate to https://w3.ibm.com/ and check page title
+    - expect: Page title contains expected text like 'w3', 'IBM' or the tab name
+  2. Click each tab (People, News, Apps, IT Support, AskIBM) and check the page title after each
+    - expect: Page title updates or remains consistent with the active tab
+    - expect: No JavaScript errors appear in the console

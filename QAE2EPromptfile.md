@@ -43,9 +43,6 @@ Based on the user story SCRUM-101 that we just reviewed, use the
     -   Happy path scenarios
     -   Negative scenarios (validation errors, empty fields, invalid
         data)
-    -   Edge cases and boundary conditions
-    -   Navigation flow tests
-    -   UI element validation
 4.  Save the test plan as:
 
 `specs/w3-home-test-plan.md`
