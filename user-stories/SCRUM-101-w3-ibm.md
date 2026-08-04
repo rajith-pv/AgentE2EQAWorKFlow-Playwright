@@ -18,11 +18,9 @@ https://w3.ibm.com/
 ### AC1: Navigate to all tabs in w3 home page
 - GIVEN I am a logged in user to w3 home page
 - WHEN w3 home page is loaded 
-- THEN click on People Tab and wait for 30 seconds 
-- AND click on News Tab and wait for 30 seconds
-- AND click on Apps Tab and wait for 30 seconds
-- AND click on IT Support Tab and wait for 30 seconds
-- AND click on AskIBM Tab and wait for 30 seconds
+- THEN click on People Tab 
+- AND click on News Tab
+
 
 
 ## Business Rules
