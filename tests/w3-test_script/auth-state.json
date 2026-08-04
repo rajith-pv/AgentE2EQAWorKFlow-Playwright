@@ -1,0 +1,418 @@
+{
+  "cookies": [
+    {
+      "name": "SessionCTXID_authservice",
+      "value": "6c989d44-8b75-4770-b4df-b59eac729053",
+      "domain": "login.w3.ibm.com",
+      "path": "/authsvc/mtfim/sps",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "SessionCTXID_authbroker",
+      "value": "b29adc72-0767-4d4a-8326-d60961639610",
+      "domain": "login.w3.ibm.com",
+      "path": "/idaas/mtfim/sps",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "2f96d4958208bfd79c30849c750d2bee",
+      "value": "15a12004465e272827039b5a7f1fdd36",
+      "domain": "w3-divolte-w3-carbon-ui-clickstream.06f18550.public.multi-containers.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_dvs",
+      "value": "0:msddhibi:si26PYFxnmqt4hTc7V7_fCBRAeTBuGP_",
+      "domain": "w3.ibm.com",
+      "path": "/",
+      "expires": 1785772480.331355,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_dvp",
+      "value": "0:msddhibi:BhsKThOLnKD0elMFE_6xu5iDoW56qkgM",
+      "domain": "w3.ibm.com",
+      "path": "/",
+      "expires": 1820330680.331615,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "7d0b1573a92eb9eb47d2c8ee71e588f3",
+      "value": "c5f637bee5dc58509e435fc087740ecd",
+      "domain": "w3-authorization-service.w3-globals.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sessionid",
+      "value": "aypu16jc3qbdy9hzs47mueof1888ymoh",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": 1817306228.413629,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "2c0b91dd01331a338536935fbadc67eb",
+      "value": "d076b6226a611373263a65f1b5239db1",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "CISESSIONIDPR07B",
+      "value": "PBC5YS:2116502726",
+      "domain": ".login.w3.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ak_bmsc",
+      "value": "C47F58184466C2465DC72B50E52E31A8~000000000000000000000000000000~YAAQlozQFyF8zaufAQAAgT4zyAAU4KdCsiBuV50SGCTwzYhj5Dul6BGo6Kscg4vm+H4jwiyhK9bzv/cws/C7TRkPpWDvSha5kENYlxlIpflkowSnBHFqW5krZZ3J91qmIlXyXL3YOe9j9Ii57tO7hBUb9LjCZ9SfPf5VFfz4tGhHqQlxguhZWrj+EE5aP/jd4PPUiA3gfEozbFvBoDTt5Na7GGDNCERKkbA7LlMri1eV3fB2p9tR173jS57XmIB876RziH9StJtm908V6SzZEJIC9VlOtT4CDAII8ApGKHhkQB2CJz1LpZw8z1PZmI2nuoI/ijamnEgVs1o15XLSZHugpjgDMKoFHC4nWzZCdjPtEPIsXLVNP5KMCqvnejGz+OQ4sYmuhFNGEsnVM1nWE6rq3A==",
+      "domain": ".w3.ibm.com",
+      "path": "/",
+      "expires": 1785777429.138175,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "w3idAuthMethod",
+      "value": "fido",
+      "domain": "login.w3.ibm.com",
+      "path": "/",
+      "expires": 1817306238,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "CIPD-S-SESSION-ID",
+      "value": "1:2:rediscol02b:EN8cVLV38AQ91GPApGyKY5bAdOqa24ttXF5ZPfb1D2k=",
+      "domain": "login.w3.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "___tk67142224",
+      "value": "1785770251048",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "LSESSIONID",
+      "value": "eyJlIjoiSU0xWUlxejgrQ1I0Si85TW42dVNIMWJkS0RkaDlteFY5YWZkcEFXcEhJMlV4QjBIUmxhNFA0aXFzS0puaXoxd2o0aEVRUWpsY1B2MlJlQjFsZnpFWU9lNnR5VHoxMW9ESDlGc2l1U1VIWWtPa2dGclE2WVJFWW0yQmpLWEc3ZmtlaFZFb2ZkaTBZRGRQM0ZPMmlPQ2VtcCtmNytKMEp1R2ljZ012OVRDdC9LbDNkVllrMFVKWEsvdVgycThJQS82IiwiaSI6IlRBTWNEd1NHVFcxQjd0YzhxeFJrRUE9PSJ9.9bcf1a407f5fa5b0.MTE0YjliOTkzNTM4OGRiMGE3NzM0NDFkMjE0NWZjODhmODUwNjRiM2YyYzdhZGQ1OTg2ZmU3YTY2NTA5M2E3MA%3D%3D",
+      "domain": ".w3.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "__gdic",
+      "value": "msddi0p861kmgggx6ok",
+      "domain": ".w3.ibm.com",
+      "path": "/",
+      "expires": 1820330251.533302,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "___r671422",
+      "value": "0.9804577282661",
+      "domain": ".w3.ibm.com",
+      "path": "/",
+      "expires": 1820330251.561291,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "g__gdic",
+      "value": "msddi0p861kmgggx6ok",
+      "domain": ".advanced-web-analytics.com",
+      "path": "/",
+      "expires": 1820330252.160066,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "bm_sv",
+      "value": "DFF78633098A0C71604292CC94E0763F~YAAQlozQF/Z9zaufAQAA9ZkzyAC6+s8C0/eWUJyp57QSi6wk6OL/x8hu58ZtSTXO/EO4Ca276wMMZTUGkdufAaMimEK+U369tRms1RiVfVBDYyuWrDtHSnltvDj609/TnmjGNjJR18WzUFH6RTC8i1XBQtIcKXdeKL0X/AVyRt7hstsC+A6c1M8S4sHmMhJ2yBUrZ1zjYKJrOVBYnLp+K37Uut/xP4mRP9OMrRfI0ItBLH6B/TfC3aDwXMg9nz7jO+Zfd8GPbmw=~1",
+      "domain": ".w3.ibm.com",
+      "path": "/",
+      "expires": 1785777430.549447,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "w3_refresh_token",
+      "value": "%2B58LtrXOMbnU1Pa2Vl7vR2Bz93ovv1qAtOn%2Fg5nexuY%2B2oTGbeAKgg%2FwYJGG670G2JQy4zpxsIYfieiNTrK3Y%2B9r%2BU8FHjRxB2uZBMWsWbxA5Tz%2FpoDTsB60m1FRwtz2hPji9FOwO5RuceXMP2PX%2BWGWuPJ6%2BtcCy%2FM2%2FhV0oDkDAq3aPKTpPOuIUv9gBheJA1PC1oAdk29Lr%2Fpvv3amHnFkzUDkN9C3XhaBHRGdiG9eSor027IBtvfBDZbbcSRFjZCVbc%2Ftw5fKCrlvPa2NM4qjr8xK1RY1lILxMJZhoO56uGgGeJKTnJNiwe5Lf9qeGU2K9wki3AYaQFj8b7IJcmnS6mJlR0uQN67yZWC0PrKfahw%3D",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": 1786202256.20761,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "access_token",
+      "value": "2-zBTOmFAbHwcAcu9VZu3KoP0dUs88yTX9Px-hwgAIA.J4vxCY6-5ItkqrfJ5pZI6YHWdz1VG9XW28qVoegDrPMaB54aWg_uizq38dTQ3KYG6IbVuyh6pzOxCvT1Vk8fGw.M18xNzg1NzcwMjU1XzQ2",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": 1785777456.207854,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "w3_access_token",
+      "value": "2-zBTOmFAbHwcAcu9VZu3KoP0dUs88yTX9Px-hwgAIA.J4vxCY6-5ItkqrfJ5pZI6YHWdz1VG9XW28qVoegDrPMaB54aWg_uizq38dTQ3KYG6IbVuyh6pzOxCvT1Vk8fGw.M18xNzg1NzcwMjU1XzQ2",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": 1785777456.207937,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "uid",
+      "value": "495302744",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": 1786202256.208006,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "w3_uid",
+      "value": "495302744",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": 1786202256.208065,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "exp",
+      "value": "1785777455",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": 1785943056.208123,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "w3_exp",
+      "value": "1785777455",
+      "domain": ".ibm.com",
+      "path": "/",
+      "expires": 1785943056.208181,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "session",
+      "value": "eyJyZWRpcmVjdFVSSSI6Imh0dHBzOi8vdzMuaWJtLmNvbS8ifQ==",
+      "domain": "w3-authorization-service.w3-globals.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": 1785856656.208256,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "session.sig",
+      "value": "MG0zwciqrKXTa50gvYxra7Bhx4g",
+      "domain": "w3-authorization-service.w3-globals.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": 1785856656.208393,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "bF6nnHjNP8cFkSPme15XmOZImcs",
+      "value": "1",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "acca70e225f77f86481bd00a5c3d6b63",
+      "value": "28fa1c35d50010c3dad4e8aafcc260ab",
+      "domain": "w3-ui-unified-profile-proxy.w3-ui.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "04819ffcff33e0de749caf6aadd7aa21",
+      "value": "ed0ab2ea7972a95bde55353dff18e51c",
+      "domain": "w3-ui-unified-profile-proxy.w3-ui.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "16fb34a899c12a746db1fe45d5ae84f3",
+      "value": "986439fb051a60bccb3408599294179d",
+      "domain": "w3-news-cos-proxy.w3-news.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "bnlV1JbD4k6Aa0AWezJbmNmm4cs",
+      "value": "1",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "bsw8255VOTxR9AW6C9RuG4eKvcs",
+      "value": "1",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "bmKqDFFDZ7AcMaJLRqC5yE5l1cs",
+      "value": "1",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "b6mOUffPeuvCmPo77w1i9pt2Kcs",
+      "value": "1",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "c464c031796d303ba1a72785525ab932",
+      "value": "e98fe80cd713581ccc99176757bfef4f",
+      "domain": "w3.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "f3bdb7c80f82f330d7787be58f63cf24",
+      "value": "816a42b8301f177aac3705f74aa3d1bf",
+      "domain": "ask-ui-clickstream.06f18550.public.multi-containers.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "b1qs3otjnHfhPLvsuhXnyvXMVcs",
+      "value": "1",
+      "domain": "beeheard.beeheard.dal.app.cirrus.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "acca70e225f77f86481bd00a5c3d6b63",
+      "value": "2d78b32c1fd7efbc5b7df0565e98db94",
+      "domain": "w3-unified-profile-api.ibm.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://w3.ibm.com",
+      "localStorage": [
+        {
+          "name": "i18nextLng",
+          "value": "en-US"
+        },
+        {
+          "name": "hkey",
+          "value": "{\"value\":\"<missing_from_res_and_storage>\",\"expiry\":1786375057339}"
+        }
+      ]
+    },
+    {
+      "origin": "https://awppcivuse1.advanced-web-analytics.com",
+      "localStorage": [
+        {
+          "name": "g__gdic",
+          "value": "msddi0p861kmgggx6ok"
+        }
+      ]
+    }
+  ]
+}
