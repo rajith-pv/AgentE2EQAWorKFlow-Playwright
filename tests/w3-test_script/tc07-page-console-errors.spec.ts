@@ -1,49 +1,57 @@
-// spec: specs/w3-home-test-plan.md
-// seed: tests/seed.spec.ts
-// Suite 3 — Edge Cases & Negative Tests
-// TC07 - Verify no critical console errors during navigation
-
 import { test, expect } from '@playwright/test';
 import path from 'path';
+import fs from 'fs';
 
-const AUTH_STATE = path.resolve('.playwright-mcp/w3-auth-state.json');
+/**
+ * TC-007: No Console Errors During Navigation
+ *
+ * Healing Notes (v2): If auth/w3-session.json does not exist, test is skipped.
+ */
 
-// FIXME: w3.ibm.com is IBM internal intranet — requires IBM corporate network/VPN.
-// Remove test.fixme when running on IBM network.
-test.fixme('TC07 - Verify no critical console errors during navigation', async ({ browser }) => {
-  const context = await browser.newContext({ storageState: AUTH_STATE });
-  const page = await context.newPage();
+const W3_URL = 'https://w3.ibm.com/';
+const SESSION_PATH = path.join(__dirname, '../../auth/w3-session.json');
+const SESSION_EXISTS = fs.existsSync(SESSION_PATH);
 
-  // 1. Collect console errors (exclude known analytics/tracking noise)
-  const criticalErrors: string[] = [];
-  page.on('console', msg => {
-    if (msg.type() === 'error') {
-      const text = msg.text();
-      // Filter out expected third-party analytics noise
-      if (!text.includes('analytics') && !text.includes('_dvs') && !text.includes('divolte')) {
-        criticalErrors.push(text);
-      }
-    }
+test.describe('TC-007: No Console Errors on Navigation', () => {
+  test.use({
+    storageState: SESSION_EXISTS ? SESSION_PATH : undefined,
   });
 
-  // 2. Navigate to W3 home page — check for errors on load
-  await page.goto('https://w3.ibm.com/');
-  await page.waitForLoadState('domcontentloaded');
+  test('no console errors during page load and tab navigation', async ({ page }) => {
+    if (!SESSION_EXISTS) {
+      test.skip(true, 'Skipped: auth/w3-session.json not found. Run on IBM network to create session.');
+    }
 
-  // 3. Click People tab — check for errors
-  const peopleTab = page.getByRole('tab', { name: /people/i })
-    .or(page.getByText('People').first());
-  await peopleTab.click();
-  await page.waitForLoadState('domcontentloaded');
+    const consoleErrors: string[] = [];
 
-  // 4. Click News tab — check for errors
-  const newsTab = page.getByRole('tab', { name: /^news$/i })
-    .or(page.getByText('News').first());
-  await newsTab.click();
-  await page.waitForLoadState('domcontentloaded');
+    page.on('console', msg => {
+      if (msg.type() === 'error') consoleErrors.push(`[${msg.type()}] ${msg.text()}`);
+    });
+    page.on('pageerror', err => consoleErrors.push(`[pageerror] ${err.message}`));
 
-  // 5. Assert no critical JavaScript errors were thrown during navigation
-  expect(criticalErrors, `Critical JS errors: ${criticalErrors.join(', ')}`).toHaveLength(0);
+    await page.goto(W3_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await page.waitForLoadState('networkidle', { timeout: 20000 });
 
-  await context.close();
+    const peopleTab = page
+      .getByRole('tab', { name: /people/i })
+      .or(page.getByRole('link', { name: /people/i }));
+    await expect(peopleTab).toBeVisible({ timeout: 10000 });
+    await peopleTab.click();
+    await page.waitForLoadState('networkidle', { timeout: 15000 });
+
+    const newsTab = page
+      .getByRole('tab', { name: /news/i })
+      .or(page.getByRole('link', { name: /news/i }));
+    await expect(newsTab).toBeVisible({ timeout: 10000 });
+    await newsTab.click();
+    await page.waitForLoadState('networkidle', { timeout: 15000 });
+
+    if (consoleErrors.length > 0) {
+      console.error('Console errors detected:');
+      consoleErrors.forEach(err => console.error(err));
+    }
+
+    expect(consoleErrors, `Console errors found:\n${consoleErrors.join('\n')}`).toHaveLength(0);
+    console.log('TC-007 PASSED: No console errors during navigation');
+  });
 });

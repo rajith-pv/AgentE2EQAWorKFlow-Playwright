@@ -1,114 +1,222 @@
-# W3 IBM Home Page Navigation Test Plan — SCRUM-101
+# Test Plan: SCRUM-101 — W3 Home Page Navigation
 
-## Application Overview
+**Story:** SCRUM-101 — W3 Navigation Process  
+**Application URL:** https://w3.ibm.com/  
+**Prepared by:** QA Automation Agent  
+**Date:** 2025-07-14  
+**Version:** 1.0
 
-Test plan for SCRUM-101: W3 IBM Home Page Tab Navigation. The application under test is the IBM internal W3 intranet home page (https://w3.ibm.com/). An authenticated IBM employee navigates through the People and News tabs. Tests cover: happy-path tab navigation, home page load verification, unauthenticated redirect, and negative/edge cases. Auth is managed via saved storage state (.playwright-mcp/w3-auth-state.json). Application uses IBM Carbon Design System (React SPA).
+---
 
-## Test Scenarios
+## 1. Scope
 
-### 1. Suite 1 — Home Page Load
+This test plan covers the end-to-end navigation of the IBM W3 home page including:
+- Page load and authentication redirect
+- Tab navigation (People, News, Apps, IT Support, Ask IBM)
+- Active state validation for navigation tabs
+- Console error checks during navigation
 
-**Seed:** `tests/seed.spec.ts`
+---
 
-#### 1.1. TC01 - Verify W3 home page loads for authenticated user
+## 2. Test Environment
 
-**File:** `tests/w3-test_script/tc01-homepage-load.spec.ts`
+| Field         | Value                          |
+|---------------|--------------------------------|
+| Application   | https://w3.ibm.com/            |
+| Username      | rajith.pv@in.ibm.com           |
+| Password      | pws                            |
+| Browsers      | Chrome, Firefox, Safari        |
+| Test Tool     | Playwright                     |
+| Network       | IBM Corporate Network required |
 
-**Steps:**
-  1. Navigate to https://w3.ibm.com/ with saved auth state (.playwright-mcp/w3-auth-state.json)
-    - expect: Page loads without redirecting to login
-    - expect: Page title contains 'w3' or 'IBM'
-    - expect: Main navigation bar is visible
-  2. Verify the navigation bar contains People and News tabs
-    - expect: 'People' tab is visible in the navigation bar
-    - expect: 'News' tab is visible in the navigation bar
+---
 
-#### 1.2. TC02 - Verify unauthenticated access redirects to IBM login page
+## 3. Test Scenarios
 
-**File:** `tests/w3-test_script/tc02-unauthenticated-redirect.spec.ts`
+### TC-001: Home Page Loads Successfully
 
-**Steps:**
-  1. Open a fresh browser context with no cookies or auth state and navigate to https://w3.ibm.com/
-    - expect: Browser is redirected away from w3.ibm.com
-    - expect: URL contains 'login.w3.ibm.com' or similar IBM SSO domain
-  2. Inspect the redirected page for login form elements
-    - expect: A username or email input field is visible
-    - expect: Page is clearly an IBM login/authentication page
-
-### 2. Suite 2 — Tab Navigation (AC1)
-
-**Seed:** `tests/seed.spec.ts`
-
-#### 2.1. TC03 - Navigate to People tab and verify content loads
-
-**File:** `tests/w3-test_script/tc03-people-tab.spec.ts`
+**Priority:** Critical  
+**Type:** Functional — Happy Path  
+**Acceptance Criteria:** AC1 (pre-condition)
 
 **Steps:**
-  1. Navigate to https://w3.ibm.com/ with auth state restored
-    - expect: Home page loads and navigation tabs are visible
-  2. Click on the 'People' tab in the navigation bar
-    - expect: People tab becomes active/selected
-    - expect: Page content updates to show People section
-  3. Wait for People tab content to fully load (domcontentloaded)
-    - expect: People-related content is visible (directory, search, org chart)
-    - expect: No error messages displayed
 
-#### 2.2. TC04 - Navigate to News tab and verify content loads
+| # | Action | Expected Result |
+|---|--------|----------------|
+| 1 | Navigate to https://w3.ibm.com/ | Page begins loading |
+| 2 | Observe the page title | Title contains "w3" or "IBM" |
+| 3 | Wait for DOM content to load | Page is fully loaded with no spinner |
+| 4 | Verify the top navigation bar is visible | Navigation bar with tabs is visible |
+| 5 | Take screenshot | Screenshot captured as `tc001-home-loaded.png` |
 
-**File:** `tests/w3-test_script/tc04-news-tab.spec.ts`
+**Test Data:** None  
+**Pass Criteria:** Home page loads within 10 seconds; navigation tabs are visible.
 
-**Steps:**
-  1. Navigate to https://w3.ibm.com/ with auth state restored
-    - expect: Home page loads and navigation tabs are visible
-  2. Click on the 'News' tab in the navigation bar
-    - expect: News tab becomes active/selected
-    - expect: Page content updates to show News section
-  3. Wait for News tab content to fully load (domcontentloaded)
-    - expect: News articles or headlines are visible
-    - expect: No error messages displayed
+---
 
-#### 2.3. TC05 - Full AC1 flow: home page → People tab → News tab
+### TC-002: Unauthenticated User Redirected to Login
 
-**File:** `tests/w3-test_script/tc05-full-ac1-flow.spec.ts`
+**Priority:** High  
+**Type:** Functional — Negative / Security  
+**Acceptance Criteria:** AC1 (pre-condition — must be logged in)
 
 **Steps:**
-  1. Navigate to https://w3.ibm.com/ with auth state and verify home page is loaded
-    - expect: Home page title matches /w3|ibm/i
-    - expect: Both People and News tabs are visible
-  2. Click on the People tab
-    - expect: People tab activates and content loads
-  3. Click on the News tab
-    - expect: News tab activates and content loads
-  4. Verify page URL still contains w3.ibm.com after all navigation
-    - expect: User remains on the W3 IBM domain throughout navigation
 
-### 3. Suite 3 — Edge Cases & Negative Tests
+| # | Action | Expected Result |
+|---|--------|----------------|
+| 1 | Open a fresh browser (no existing session) | New browser session started |
+| 2 | Navigate to https://w3.ibm.com/ | Page loads or redirect occurs |
+| 3 | Observe URL after navigation | URL should redirect to IBM login/SSO page |
+| 4 | Verify login form is present | Username/password fields or SSO prompt visible |
 
-**Seed:** `tests/seed.spec.ts`
+**Test Data:** None (unauthenticated)  
+**Pass Criteria:** Unauthenticated users are redirected to a login page; w3 content is NOT accessible.
 
-#### 3.1. TC06 - Verify active tab state changes visually on click
+---
 
-**File:** `tests/w3-test_script/tc06-tab-active-state.spec.ts`
+### TC-003: Navigate to People Tab
 
-**Steps:**
-  1. Navigate to https://w3.ibm.com/ with auth state
-    - expect: Home page loads
-  2. Note the default active tab aria-selected state before clicking People
-    - expect: People tab has aria-selected='false' or is not active initially
-  3. Click People tab and check aria-selected attribute
-    - expect: People tab now has aria-selected='true' or equivalent active class
-  4. Click News tab and check aria-selected attribute
-    - expect: News tab now has aria-selected='true'
-    - expect: People tab reverts to inactive state
+**Priority:** Critical  
+**Type:** Functional — Happy Path  
+**Acceptance Criteria:** AC1 step 3
 
-#### 3.2. TC07 - Verify no critical console errors during navigation
-
-**File:** `tests/w3-test_script/tc07-page-console-errors.spec.ts`
+**Pre-condition:** User is logged in to w3 home page.
 
 **Steps:**
-  1. Set up console error listener and navigate to https://w3.ibm.com/ with auth state
-    - expect: Page loads without throwing critical JavaScript errors
-  2. Click People tab and capture any console errors
-    - expect: No critical errors (excluding known analytics/tracking noise)
-  3. Click News tab and capture any console errors
-    - expect: No critical errors during News tab navigation
+
+| # | Action | Expected Result |
+|---|--------|----------------|
+| 1 | Verify home page is loaded with navigation tabs visible | Navigation tabs present |
+| 2 | Locate the "People" tab in the navigation bar | "People" tab is visible and clickable |
+| 3 | Click on the "People" tab | Tab registers the click |
+| 4 | Wait for page/section to load | People section content is displayed |
+| 5 | Verify the "People" tab is now in active/selected state | Active indicator (underline, highlight, bold) on People tab |
+| 6 | Verify the page content is relevant to "People" | Section heading or content references "People" |
+| 7 | Take screenshot | Screenshot captured as `tc002-people-tab.png` |
+
+**Test Data:** None  
+**Pass Criteria:** People tab is clicked; relevant content loads; tab shows active state.
+
+---
+
+### TC-004: Navigate to News Tab
+
+**Priority:** Critical  
+**Type:** Functional — Happy Path  
+**Acceptance Criteria:** AC1 step 4
+
+**Pre-condition:** User is logged in to w3 home page.
+
+**Steps:**
+
+| # | Action | Expected Result |
+|---|--------|----------------|
+| 1 | Verify home page is loaded with navigation tabs visible | Navigation tabs present |
+| 2 | Locate the "News" tab in the navigation bar | "News" tab is visible and clickable |
+| 3 | Click on the "News" tab | Tab registers the click |
+| 4 | Wait for page/section to load | News section content is displayed |
+| 5 | Verify the "News" tab is now in active/selected state | Active indicator on News tab |
+| 6 | Verify the page content is relevant to "News" | Section heading or content references "News" or news articles |
+| 7 | Take screenshot | Screenshot captured as `tc003-news-tab.png` |
+
+**Test Data:** None  
+**Pass Criteria:** News tab is clicked; relevant content loads; tab shows active state.
+
+---
+
+### TC-005: Full AC1 Flow — Home → People → News (Sequential)
+
+**Priority:** Critical  
+**Type:** End-to-End — Happy Path  
+**Acceptance Criteria:** AC1 (complete flow)
+
+**Pre-condition:** User is logged in to w3 home page.
+
+**Steps:**
+
+| # | Action | Expected Result |
+|---|--------|----------------|
+| 1 | Navigate to https://w3.ibm.com/ | Home page loads |
+| 2 | Confirm home page is the active/default view | Home/default content is displayed |
+| 3 | Click on the "People" tab | People content loads; People tab is active |
+| 4 | Click on the "News" tab | News content loads; News tab is active |
+| 5 | Verify People tab is no longer active | People tab returns to inactive state |
+| 6 | Verify News tab is active | News tab has active indicator |
+| 7 | Take screenshot of final state | Screenshot captured |
+
+**Test Data:** None  
+**Pass Criteria:** Complete navigation sequence executes without error; correct active states maintained.
+
+---
+
+### TC-006: Tab Active State Persistence
+
+**Priority:** Medium  
+**Type:** Functional — UI Validation
+
+**Pre-condition:** User is on w3 home page.
+
+**Steps:**
+
+| # | Action | Expected Result |
+|---|--------|----------------|
+| 1 | Click on each available tab in sequence | Each tab loads without error |
+| 2 | For each tab, verify the active state indicator updates | Only the currently-selected tab shows active state |
+| 3 | Verify no two tabs are simultaneously active | Only one tab active at any time |
+
+**Test Data:** All available navigation tabs  
+**Pass Criteria:** Active state is exclusive to selected tab; no double-active states.
+
+---
+
+### TC-007: No Console Errors on Navigation
+
+**Priority:** Medium  
+**Type:** Non-Functional — Quality
+
+**Pre-condition:** User is on w3 home page.
+
+**Steps:**
+
+| # | Action | Expected Result |
+|---|--------|----------------|
+| 1 | Open browser with console monitoring enabled | Console listener attached |
+| 2 | Navigate to https://w3.ibm.com/ | Home page loads |
+| 3 | Click People tab | People content loads |
+| 4 | Click News tab | News content loads |
+| 5 | Collect all console errors | Zero critical console errors (type: error) during navigation |
+
+**Pass Criteria:** No JavaScript `console.error` messages fired during tab navigation.
+
+---
+
+## 4. Out of Scope
+
+- IBM W3 authentication flow (login form submission — requires SSO/SAML which cannot be automated)
+- Write operations (commenting, editing profiles)
+- Mobile viewport testing (deferred to future sprint)
+- Performance benchmarking
+
+---
+
+## 5. Risks
+
+| Risk | Impact | Mitigation |
+|------|--------|----------|
+| IBM SSO / w3 requires corporate network | High | Tests must run on IBM-connected machine |
+| Tab selectors may change with W3 updates | Medium | Use role-based and text-based locators |
+| Session expiry mid-test | Low | Use `storageState` to persist authenticated session |
+
+---
+
+## 6. Traceability Matrix
+
+| Test Case | Acceptance Criteria | Type |
+|-----------|--------------------|----||
+| TC-001 | AC1 (pre-condition) | Functional |
+| TC-002 | AC1 (security/auth gate) | Negative |
+| TC-003 | AC1 — People Tab | Functional |
+| TC-004 | AC1 — News Tab | Functional |
+| TC-005 | AC1 — Full flow | E2E |
+| TC-006 | AC1 — UI state | UI Validation |
+| TC-007 | Business Rule 2 | Non-Functional |
