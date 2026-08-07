@@ -1,25 +1,22 @@
 # User Story: SCRUM-101 - W3 Navigation process
 
 ## Story Title
-As a Employee, I want navigate to various w3 tabas and capture information 
+As a User, I want navigate to various tabs and capture information 
 
 ## Story Description
-Implement a complete navigation flow that allows Employees to visit various tabs in w3 home page.
+Implement a complete navigation flow that allows Users to visit various tabs in  home page.
 
 ## Application URL
-https://w3.ibm.com/
+https://www.ndtv.com/
 
-## Test Credentials
-- Username: `rajith.pv@in.ibm.com`
-- Password: `pws`
 
 ## Acceptance Criteria
 
-### AC1: Navigate to all tabs in w3 home page
-- GIVEN I am a logged in user to w3 home page
-- WHEN w3 home page is loaded 
-- THEN click on People Tab 
-- AND click on News Tab
+### AC1: Navigate to tabs in ndtv home page
+- GIVEN I am a user logged in to  home page
+- WHEN  home page is loaded 
+- THEN click on India Tab 
+- AND click on Opinion Tab
 
 
 
@@ -29,7 +26,7 @@ https://w3.ibm.com/
 
 ## Technical Notes
 - Use Playwright for test automation
-- Test across Chrome, Firefox, and Safari browsers
+- Test with Firefox browser
 - Validate all form validation messages
 
 ## Definition of Done

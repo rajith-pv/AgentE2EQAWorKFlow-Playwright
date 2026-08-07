@@ -1,214 +1,120 @@
-# Test Plan: SCRUM-101 — W3 IBM Home Page Navigation
+# Test Plan: SCRUM-101 — NDTV Home Page Navigation
 
 ## Overview
 
-| Field             | Value                                    |
-|-------------------|------------------------------------------|
-| **Story**         | SCRUM-101 — W3 Navigation Process        |
-| **Application**   | https://w3.ibm.com/                      |
-| **Author**        | QA Automation Agent                      |
-| **Date**          | 2026-08-07                               |
-| **Browser Scope** | Chrome (Chromium), Firefox, Safari (WebKit) |
+| Field             | Value                                         |
+|-------------------|-----------------------------------------------|
+| **Story**         | SCRUM-101 — NDTV Navigation Process           |
+| **Application**   | https://www.ndtv.com/                         |
+| **Author**        | QA Automation Agent                           |
+| **Date**          | 2026-08-07                                    |
+| **Browser Scope** | Firefox (primary per story); Chromium (cross-browser) |
 
 ---
 
 ## Application Overview
 
-W3 is IBM's internal employee portal (intranet). It is a Single Page Application (SPA) using hash-based routing (`#/` for home, `#/people`, `#/news`, etc.). Authentication is handled via IBM w3id SSO (IBM Verify), with an `access_token` stored in browser cookies.
+NDTV.com is a public news portal. Navigation tabs are rendered in a top navigation bar (`<nav>` element) with links using CSS class `m-nv_lnk`. No authentication is required.
 
 ### Navigation Structure (discovered via exploration)
-- **Home** → `https://w3.ibm.com/` (title: `Home`)
-- **People** → `https://w3.ibm.com/#/people` (title: `People`)
-- **News** → `https://w3.ibm.com/#/news` (title: `News`)
-- **IT Support** → `https://w3.ibm.com/#/support`
-- **AskIBM** → accessible from the left sidebar
+- **Home**    → `https://www.ndtv.com/` (title contains `NDTV.com`)
+- **Latest**  → `https://www.ndtv.com/latest`
+- **India**   → `https://www.ndtv.com/india` (title contains `India News`)
+- **World**   → `https://www.ndtv.com/world`
+- **Videos**  → `https://www.ndtv.com/video`
+- **Opinion** → `https://www.ndtv.com/opinion` (title contains `NDTV Opinions`)
+- **Cities**  → `https://www.ndtv.com/cities`
 
----
-
-## Test Credentials
-
-| Field    | Value                      |
-|----------|----------------------------|
-| Username | rajith.pv@in.ibm.com       |
-| Password | pws                        |
-
-> Authentication uses IBM w3id SSO. Tests rely on a saved `storageState` (cookies + localStorage) to bypass interactive login.
+### Key Selectors Discovered
+| Element           | Selector                                                          |
+|-------------------|-------------------------------------------------------------------|
+| Nav bar           | `nav` (first `<nav>` element)                                     |
+| India nav link    | `a[href*="/india?pfrom=home-ndtv_mainnavigation"]`                |
+| Opinion nav link  | `a[href*="/opinion?pfrom=home-ndtv_mainnavigation"]`              |
+| All nav links     | `a.m-nv_lnk`                                                      |
+| India by text     | `page.getByRole('link', { name: 'India', exact: true }).first()`  |
+| Opinion by text   | `page.getByRole('link', { name: 'Opinion', exact: true }).first()`|
 
 ---
 
 ## Acceptance Criteria Coverage
 
-| AC  | Criterion                                             | Test Cases   |
-|-----|-------------------------------------------------------|-------------|
-| AC1 | Home page loads for a logged-in user                  | TC01, TC02   |
-| AC1 | Click People tab → People page loads                  | TC03         |
-| AC1 | Click News tab → News page loads                      | TC04         |
-| AC1 | Full navigation flow (Home → People → News)           | TC05         |
+| AC  | Criterion                                          | Test Cases    |
+|-----|----------------------------------------------------|---------------|
+| AC1 | NDTV home page loads                               | TC01          |
+| AC1 | India tab navigable → India page loads             | TC02          |
+| AC1 | Opinion tab navigable → Opinion page loads         | TC03          |
+| AC1 | Full flow: Home → India → Opinion                  | TC04          |
 
 ---
 
 ## Test Scenarios
 
----
+### TC01 — NDTV Home Page Load
 
-### TC01 — Home Page Load
+| Step | Action                                     | Expected Result                           |
+|------|--------------------------------------------|-------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`        | Page loads with HTTP 200                  |
+| 2    | Wait for page title                        | Title contains `NDTV`                     |
+| 3    | Verify navigation bar is present           | `<nav>` element is visible                |
+| 4    | Verify India nav link is present           | Link with text `India` visible in nav     |
+| 5    | Verify Opinion nav link is present         | Link with text `Opinion` visible in nav   |
 
-**Description:** Verify that navigating to the W3 home page loads correctly for an authenticated user.
+### TC02 — India Tab Navigation
 
-**Test Data:** Saved auth state (w3-auth-state.json)
+| Step | Action                                              | Expected Result                          |
+|------|-----------------------------------------------------|------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                          |
+| 2    | Click `India` link in navigation                    | Browser navigates to `/india`            |
+| 3    | Wait for page load                                  | Page title contains `India News`         |
+| 4    | Verify URL contains `/india`                        | URL = `https://www.ndtv.com/india`       |
 
-**Preconditions:** User is authenticated (auth state loaded)
+### TC03 — Opinion Tab Navigation
 
-**Steps:**
+| Step | Action                                              | Expected Result                          |
+|------|-----------------------------------------------------|------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                          |
+| 2    | Click `Opinion` link in navigation                  | Browser navigates to `/opinion`          |
+| 3    | Wait for page load                                  | Page title contains `Opinion`            |
+| 4    | Verify URL contains `/opinion`                      | URL = `https://www.ndtv.com/opinion`     |
 
-| Step | Action                                       | Expected Result                                         |
-|------|----------------------------------------------|---------------------------------------------------------|
-| 1    | Navigate to `https://w3.ibm.com/`            | Page loads without redirecting to login                 |
-| 2    | Wait for page title                          | Document title changes to `Home`                        |
-| 3    | Verify banner/header is present              | `<banner>` element with role `banner` and label `w3` is visible |
-| 4    | Verify navigation links are present          | Links for `Home`, `People`, `News`, `IT Support` are visible in `navigation "Mobile Navigation"` |
-| 5    | Verify main content area loads               | `<main>` element is visible and contains AskIBM widget  |
-| 6    | Verify profile picture is visible            | `button "Profile"` with `Rajith Venkata Profile Image` is visible |
+### TC04 — Full AC1 Navigation Flow (Home → India → Opinion)
 
-**Expected Outcome:** Home page fully loads, nav links visible, user is authenticated.
+| Step | Action                                              | Expected Result                          |
+|------|-----------------------------------------------------|------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads, title contains `NDTV`   |
+| 2    | Verify nav bar and India/Opinion links visible       | Both links present in nav                |
+| 3    | Click `India` in navigation                         | URL → `/india`, title contains `India`   |
+| 4    | Navigate back to `https://www.ndtv.com/`            | Home page reloads                        |
+| 5    | Click `Opinion` in navigation                       | URL → `/opinion`, title contains `Opinion`|
 
----
+### TC05 — Navigation Links Attribute Verification
 
-### TC02 — Unauthenticated Redirect Check
-
-**Description:** Verify that when no valid auth state exists, the user is redirected to the IBM w3id login page.
-
-**Test Data:** No auth state / cleared cookies
-
-**Preconditions:** User is NOT authenticated
-
-**Steps:**
-
-| Step | Action                                         | Expected Result                                              |
-|------|------------------------------------------------|--------------------------------------------------------------|
-| 1    | Clear all cookies and navigate to `https://w3.ibm.com/` | Browser redirects to `login.w3.ibm.com`              |
-| 2    | Verify login page title                        | Page title contains `w3id`                                   |
-| 3    | Verify login prompt is shown                   | Passkey or sign-in option is visible on the page             |
-
-**Expected Outcome:** Unauthenticated user is redirected to IBM login page.
-
----
-
-### TC03 — People Tab Navigation
-
-**Description:** Verify that clicking the People navigation tab loads the People page.
-
-**Test Data:** Saved auth state
-
-**Preconditions:** Home page is loaded and authenticated
-
-**Steps:**
-
-| Step | Action                                                      | Expected Result                                           |
-|------|-------------------------------------------------------------|-----------------------------------------------------------|
-| 1    | Navigate to `https://w3.ibm.com/`                           | Home page loads (title: `Home`)                           |
-| 2    | Wait for navigation to be visible                           | `navigation "Mobile Navigation"` is present               |
-| 3    | Click `link "People"` in the navigation                     | URL changes to `https://w3.ibm.com/#/people`              |
-| 4    | Wait for page title                                         | Document title changes to `People`                        |
-| 5    | Verify People page content is loaded                        | Page contains People-specific content (search, profiles)  |
-
-**Expected Outcome:** People tab is navigable and page title changes to `People`.
-
----
-
-### TC04 — News Tab Navigation
-
-**Description:** Verify that clicking the News navigation tab loads the News page.
-
-**Test Data:** Saved auth state
-
-**Preconditions:** Home page is loaded and authenticated
-
-**Steps:**
-
-| Step | Action                                                      | Expected Result                                           |
-|------|-------------------------------------------------------------|-----------------------------------------------------------|
-| 1    | Navigate to `https://w3.ibm.com/`                           | Home page loads (title: `Home`)                           |
-| 2    | Wait for navigation to be visible                           | `navigation "Mobile Navigation"` is present               |
-| 3    | Click `link "News"` in the navigation                       | URL changes to `https://w3.ibm.com/#/news`                |
-| 4    | Wait for page title                                         | Document title changes to `News`                          |
-| 5    | Verify News page content is loaded                          | Page contains news articles                               |
-
-**Expected Outcome:** News tab is navigable and page title changes to `News`.
-
----
-
-### TC05 — Full AC1 Navigation Flow (Home → People → News)
-
-**Description:** End-to-end test covering all steps in Acceptance Criteria AC1.
-
-**Test Data:** Saved auth state
-
-**Preconditions:** Valid authenticated session
-
-**Steps:**
-
-| Step | Action                                                       | Expected Result                                           |
-|------|--------------------------------------------------------------|-----------------------------------------------------------|
-| 1    | Navigate to `https://w3.ibm.com/`                            | Home page loads (title: `Home`)                           |
-| 2    | Verify user is authenticated                                 | Profile button visible with user avatar                   |
-| 3    | Click `link "People"` in the navigation                      | URL → `#/people`, title → `People`                        |
-| 4    | Navigate back to home (`https://w3.ibm.com/`)                | Title → `Home`                                            |
-| 5    | Click `link "News"` in the navigation                        | URL → `#/news`, title → `News`                            |
-| 6    | Verify page content shows news articles                      | Articles list with headings is visible                    |
-
-**Expected Outcome:** All AC1 acceptance criteria are satisfied in a sequential flow.
-
----
-
-### TC06 — Active Navigation State Verification
-
-**Description:** Verify that the active/selected state is correctly reflected in the navigation when switching tabs.
-
-**Test Data:** Saved auth state
-
-**Steps:**
-
-| Step | Action                                                | Expected Result                                           |
-|------|-------------------------------------------------------|-----------------------------------------------------------|
-| 1    | Navigate to `https://w3.ibm.com/#/people`             | People page loads                                         |
-| 2    | Inspect navigation link `People`                      | People link has active/selected styling (aria-current)    |
-| 3    | Click `link "News"` in navigation                     | News page loads                                           |
-| 4    | Inspect navigation link `News`                        | News link has active/selected styling                     |
-
----
-
-### TC07 — No Console Errors on Home Page
-
-**Description:** Verify that navigating to the home page does not produce critical JavaScript console errors.
-
-**Steps:**
-
-| Step | Action                                                | Expected Result                                           |
-|------|-------------------------------------------------------|-----------------------------------------------------------|
-| 1    | Navigate to `https://w3.ibm.com/`                     | Home page loads                                           |
-| 2    | Collect console error messages                        | Zero `error`-level console messages related to app logic  |
+| Step | Action                                              | Expected Result                          |
+|------|-----------------------------------------------------|------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                          |
+| 2    | Inspect India link `href`                           | Contains `/india`                        |
+| 3    | Inspect Opinion link `href`                         | Contains `/opinion`                      |
 
 ---
 
 ## Test Environment
 
-| Item        | Value                                      |
-|-------------|-----------------------------------------|
-| App URL     | https://w3.ibm.com/                        |
-| Auth Method | Saved storageState (cookies + localStorage)|
-| Auth File   | `.playwright-mcp/w3-auth-state.json`       |
-| Browsers    | Chromium, Firefox, WebKit                  |
-| Framework   | Playwright + TypeScript                    |
-| Timeout     | 60000 ms per test                          |
+| Item        | Value                       |
+|-------------|-----------------------------|
+| App URL     | https://www.ndtv.com/       |
+| Auth        | None (public site)          |
+| Browsers    | Firefox (primary), Chromium |
+| Framework   | Playwright + TypeScript     |
+| Timeout     | 60000 ms per test           |
 
 ---
 
 ## Known Observations (from Exploratory Testing)
 
-1. **Navigation uses hash routing** — tabs use `#/people`, `#/news`, `#/support` paths. Direct URL navigation works.
-2. **Nav links are inside `navigation "Mobile Navigation"`** — the sidebar nav is always present but some links may be blocked by an overlay (AskIBM chat widget covers the viewport at default size).
-3. **Direct URL navigation is reliable** — using `page.goto('https://w3.ibm.com/#/people')` is the most robust navigation strategy.
-4. **Page title is the best indicator of route** — title changes reliably: `Home`, `People`, `News`.
-5. **Auth token expiry** — the `access_token` cookie has an expiry; the global-setup.ts refreshes it before each test run.
-6. **Load overlay** — W3 shows a `.cds--loading-overlay` during initial load; tests should wait for it to disappear.
+1. **Navigation uses `m-nv_lnk` CSS class** — all primary nav links share this class.
+2. **No auth required** — NDTV is a public news portal.
+3. **India and Opinion links use `pfrom` query param** — `?pfrom=home-ndtv_mainnavigation` on nav links.
+4. **Page title is reliable** — India page: contains `India News`; Opinion page: contains `Opinion`.
+5. **30 console errors on home page** — mostly ad-related (Google DFP, DoubleClick), not blocking.
+6. **Direct URL navigation is reliable** — `page.goto('https://www.ndtv.com/india')` works without the `pfrom` param.
