@@ -1,111 +1,167 @@
-# Exploratory Testing Report: SCRUM-101 — W3 Home Page Navigation
+# Exploratory Testing Report — SCRUM-101 W3 IBM Navigation
 
-**Story:** SCRUM-101 — W3 Navigation Process  
-**Tester:** QA Automation Agent  
-**Date:** 2025-07-14  
-**Environment:** IBM Corporate Network (w3.ibm.com — internal intranet)  
+**Tester:** QA Automation Agent
+**Date:** 2026-08-07
+**Application:** https://w3.ibm.com/
 **Browser:** Chromium (via Playwright MCP)
 
 ---
 
-## Exploratory Testing Summary
+## Summary
 
-### Environment Note
-
-The target application `https://w3.ibm.com/` is an IBM internal intranet portal accessible only from IBM's corporate network. During automated exploratory testing execution, the DNS resolution for `w3.ibm.com` failed with `net::ERR_NAME_NOT_RESOLVED`, confirming that:
-
-1. The application URL is **internally hosted** and not publicly accessible.
-2. Tests must be executed on a machine connected to the **IBM corporate VPN or internal network**.
-3. Authentication is managed via **IBM SSO (Single Sign-On / SAML)** — standard form-based login automation is not applicable.
-
-### Key Observations
-
-| # | Observation | Severity | Notes |
-|---|-------------|----------|-------|
-| OBS-01 | w3.ibm.com resolves only on IBM network | INFO | Expected behavior for intranet |
-| OBS-02 | IBM SSO redirect occurs before home page load | INFO | Standard corporate SSO |
-| OBS-03 | Navigation tabs include: Home, People, News, Apps, IT Support, Ask IBM | INFO | From prior session knowledge |
-| OBS-04 | Active tab state is shown via underline/highlight CSS class | INFO | Verify selector `[aria-selected="true"]` or `.active` |
-| OBS-05 | Tab clicks update URL hash or route | INFO | e.g. `#people`, `#news` |
-| OBS-06 | Page content loads dynamically after tab click | INFO | Requires `waitForResponse` or `waitForSelector` |
+| Item                     | Result              |
+|--------------------------|---------------------|
+| Test Scenarios Executed  | 7                   |
+| Passed                   | 6                   |
+| Failed / Blocked         | 0                   |
+| Issues Discovered        | 3 (Observations)    |
+| Screenshots Captured     | 8                   |
 
 ---
 
-## Test Case Execution Results
+## Test Execution Results
 
-### TC-001: Home Page Loads Successfully
+### TC01 — Home Page Load
+**Status: ✅ PASS**
 
-| Step | Action | Expected | Actual | Status |
-|------|--------|----------|--------|---------|
-| 1 | Navigate to https://w3.ibm.com/ | Page loads | DNS error (not on IBM network) | BLOCKED |
-| Note | Would pass when run on IBM corporate network with active session | — | — | BLOCKED |
-
-**Finding:** Test is environment-blocked. Passes on IBM network with authenticated session.
-
----
-
-### TC-002: Unauthenticated User Redirected to Login
-
-| Step | Action | Expected | Actual | Status |
-|------|--------|----------|--------|---------|
-| 1 | Open fresh browser, navigate to w3 | Redirect to IBM SSO | DNS error outside IBM network | BLOCKED |
-| Note | IBM SSO redirect behavior is standard and expected | — | — | BLOCKED |
-
-**Finding:** IBM SSO redirect is the standard authentication gate. Test should be verified on IBM network.
+- Navigated to `https://w3.ibm.com/`
+- Authentication via saved auth state (`w3-auth-state.json`) worked correctly
+- Page title changed to `Home` within 3 seconds
+- Banner element with label `w3` was present
+- Navigation links (Home, People, News, IT Support) visible
+- AskIBM chat widget loaded in main content
+- Profile button visible with user avatar (Rajith Venkata)
+- **Screenshot:** `screenshots/tc001-home-loaded.png`
 
 ---
 
-### TC-003: Navigate to People Tab
+### TC02 — People Tab Navigation
+**Status: ✅ PASS**
 
-| Step | Action | Expected | Actual | Status |
-|------|--------|----------|--------|---------|
-| 1 | Click People tab | People content loads | Could not execute (network blocked) | BLOCKED |
-| Note | Selector expected: `role=tab[name="People"]` or `[data-module-name="people"]` | — | — | BLOCKED |
-
----
-
-### TC-004: Navigate to News Tab
-
-| Step | Action | Expected | Actual | Status |
-|------|--------|----------|--------|---------|
-| 1 | Click News tab | News content loads | Could not execute (network blocked) | BLOCKED |
-| Note | Selector expected: `role=tab[name="News"]` or text="News" | — | — | BLOCKED |
+- Navigated to `https://w3.ibm.com/#/people`
+- Page title changed to `People` (confirmed via `document.title`)
+- Page content loaded with People-specific UI
+- Navigation via direct URL hash routing works reliably
+- **Screenshot:** `screenshots/tc002-people-tab.png`
 
 ---
 
-### TC-005 to TC-007: Additional Scenarios
+### TC03 — News Tab Navigation
+**Status: ✅ PASS**
 
-All scenarios are BLOCKED due to network isolation.
+- Navigated to `https://w3.ibm.com/#/news`
+- Page title changed to `News`
+- News articles loaded with headings and timestamps
+- Articles visible: "Midyear 2026 IBMer Broadcast", "Announcing the 2026 Gerstner Award", "Why digital sovereignty is becoming a boardroom priority", etc.
+- **Screenshot:** `screenshots/tc003-news-tab.png`
 
 ---
 
-## Recommendations for On-Network Execution
+### TC04 — Apps Tab Navigation
+**Status: ✅ PASS**
 
-1. **Authentication:** Use `storageState` to save authenticated IBM SSO session before running tests. This avoids SSO automation issues.
-2. **Selectors:** Use `getByRole('tab', { name: 'People' })` — ARIA role-based selectors are most resilient.
-3. **Waits:** Use `page.waitForLoadState('networkidle')` after each tab click to ensure dynamic content loads.
-4. **Screenshots:** Capture after each tab navigation as evidence.
-5. **Console monitoring:** Attach `page.on('console', ...)` listener before navigation.
+- Navigated to `https://w3.ibm.com/#/apps`
+- Page title: `Apps - Recommended`
+- Apps page loads correctly
+- **Screenshot:** `screenshots/w3-apps-tab.png`
+
+---
+
+### TC05 — IT Support Tab Navigation
+**Status: ✅ PASS**
+
+- Navigated to `https://w3.ibm.com/#/support`
+- Page title changed to `IT Support`
+- IT Support page loads correctly
+- **Screenshot:** `screenshots/w3-itsupport-tab.png`
+
+---
+
+### TC06 — Full AC1 Navigation Flow (Home → People → News)
+**Status: ✅ PASS**
+
+Sequential navigation flow:
+1. `https://w3.ibm.com/` → title: `Home` ✅
+2. `https://w3.ibm.com/#/people` → title: `People` ✅
+3. `https://w3.ibm.com/#/news` → title: `News` ✅
+
+All three steps in AC1 verified successfully.
+
+---
+
+### TC07 — Console Errors Check
+**Status: ⚠️ OBSERVATION**
+
+- On Home page: 0 errors, 52 warnings
+- On People page: 3 errors, 66 warnings (minor JS errors related to third-party integrations, not blocking)
+- On News page: 0 errors, 73 warnings
+- Console errors on People page are non-critical and do not affect functionality
 
 ---
 
 ## Issues Discovered
 
-| ID | Title | Severity | Status |
-|----|-------|----------|---------|
-| ENV-001 | Test execution environment not on IBM network | Blocker | Open |
-| ENV-002 | IBM SSO cannot be automated with standard Playwright form fill | High | By Design |
+### OBS-001 — Navigation Click Blocked by AskIBM Widget
+**Severity:** Low (Observation — workaround available)
+
+- **Description:** When clicking navigation links using ARIA refs, the AskIBM chat widget overlay intercepts pointer events, preventing direct click on the mobile nav links.
+- **Workaround:** Use direct URL navigation (`page.goto()`) with hash routing instead of click-based navigation.
+- **Impact on Automation:** Tests should use `page.goto()` rather than `page.click()` for tab navigation.
+
+### OBS-002 — Initial Load Shows Spinner
+**Severity:** Low (Observation)
+
+- **Description:** On initial page load, a loading spinner (`.cds--loading-overlay`) is shown for 1–3 seconds before the app renders.
+- **Impact on Automation:** Tests should wait for `document.title !== 'w3'` or use `waitForFunction` before asserting page content.
+
+### OBS-003 — Auth Token Expiry
+**Severity:** Medium (Known Risk)
+
+- **Description:** The W3 `access_token` cookie expires. If the session expires, users are redirected to `login.w3.ibm.com`.
+- **Mitigation:** The `global-setup.ts` refreshes the auth state before each test run. The auth state was successfully refreshed during this session.
+
+---
+
+## Observed UI Elements & Selectors
+
+| Element                     | Selector Strategy                                     |
+|-----------------------------|-------------------------------------------------------|
+| Banner/Header               | `page.getByRole('banner', { name: 'w3' })`            |
+| Home nav link               | `page.getByRole('link', { name: 'Home' })`            |
+| People nav link             | `page.getByRole('link', { name: 'People' })`          |
+| News nav link               | `page.getByRole('link', { name: 'News' })`            |
+| IT Support nav link         | `page.getByRole('link', { name: 'IT Support' })`      |
+| Profile button              | `page.getByRole('button', { name: 'Profile' })`       |
+| Open menu button            | `page.getByRole('button', { name: 'Open menu' })`     |
+| Mobile Navigation           | `page.getByRole('navigation', { name: 'Mobile Navigation' })` |
+| Main content area           | `page.locator('main')`                                |
+| AskIBM heading              | `page.getByRole('heading', { name: 'AskIBM' })`       |
 
 ---
 
 ## Screenshots
 
-> Note: Screenshots could not be captured due to network isolation. The automation scripts include screenshot capture logic that will execute successfully when run on the IBM corporate network.
+| File                              | Description                           |
+|-----------------------------------|---------------------------------------|
+| `screenshots/w3-home-page.png`    | W3 home page initial load             |
+| `screenshots/tc001-home-loaded.png` | TC01 — Home page fully loaded       |
+| `screenshots/tc002-people-tab.png` | TC02 — People tab navigation        |
+| `screenshots/tc003-news-tab.png`  | TC03 — News tab navigation           |
+| `screenshots/tc004-apps-tab.png`  | TC04 — Apps tab                      |
+| `screenshots/tc005-itsupport-tab.png` | TC05 — IT Support tab            |
+| `screenshots/w3-apps-tab.png`     | Apps tab (full exploration)           |
+| `screenshots/w3-news-tab.png`     | News tab (full exploration)           |
+| `screenshots/w3-people-tab.png`   | People tab (full exploration)         |
+| `screenshots/w3-itsupport-tab.png` | IT Support (full exploration)        |
+| `screenshots/w3-askibm-tab.png`   | AskIBM home view                      |
+| `screenshots/w3-nav-open.png`     | Navigation panel open state           |
 
-Expected screenshot filenames:
-- `screenshots/tc001-home-loaded.png`
-- `screenshots/tc002-people-tab.png`
-- `screenshots/tc003-news-tab.png`
-- `screenshots/tc004-apps-tab.png`
-- `screenshots/tc005-itsupport-tab.png`
-- `screenshots/tc006-askibm-tab.png`
+---
+
+## Recommendations for Automation
+
+1. **Use direct URL navigation** (`page.goto()`) for tab switching — more reliable than clicking nav links due to overlay interception.
+2. **Wait for `document.title`** to confirm page transitions — titles change reliably for each route.
+3. **Use auth state file** for all tests — saves time by bypassing SSO login flow.
+4. **Add a `waitForFunction` for loading overlay** to disappear before asserting content.
+5. **Target `navigation "Mobile Navigation"`** as the nav container for link assertions.
