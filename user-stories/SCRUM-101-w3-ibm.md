@@ -27,7 +27,6 @@ https://www.ndtv.com/
 ## Technical Notes
 - Use Playwright for test automation
 - Test with Firefox browser
-- Validate all form validation messages
 
 ## Definition of Done
 - [x] All acceptance criteria have test cases

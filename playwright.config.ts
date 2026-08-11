@@ -36,11 +36,12 @@ export default defineConfig({
     // storageState: '.playwright-mcp/w3-auth-state.json',
 
     actionTimeout: 30000,
-    navigationTimeout: 60000,
+    navigationTimeout: 90000,
   },
 
-  /* Global test timeout — NDTV is ad-heavy, allow 60s per test */
-  timeout: 60000,
+  /* Global test timeout — NDTV is ad-heavy; sub-page navigation can take 60-80s.
+   * Allow 120s per test to accommodate beforeEach + test navigation. */
+  timeout: 120000,
 
   /* Configure projects for major browsers */
   projects: [

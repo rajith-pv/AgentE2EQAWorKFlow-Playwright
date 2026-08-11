@@ -50,51 +50,93 @@ NDTV.com is a public news portal. Navigation tabs are rendered in a top navigati
 
 ## Test Scenarios
 
+---
+
 ### TC01 — NDTV Home Page Load
 
-| Step | Action                                     | Expected Result                           |
-|------|--------------------------------------------|-------------------------------------------|
-| 1    | Navigate to `https://www.ndtv.com/`        | Page loads with HTTP 200                  |
-| 2    | Wait for page title                        | Title contains `NDTV`                     |
-| 3    | Verify navigation bar is present           | `<nav>` element is visible                |
-| 4    | Verify India nav link is present           | Link with text `India` visible in nav     |
-| 5    | Verify Opinion nav link is present         | Link with text `Opinion` visible in nav   |
+**Description:** Verify the NDTV home page loads correctly.
+
+**Preconditions:** No authentication required
+
+**Steps:**
+
+| Step | Action                                     | Expected Result                                           |
+|------|--------------------------------------------|-----------------------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`        | Page loads with HTTP 200                                  |
+| 2    | Wait for page title                        | Title contains `NDTV`                                     |
+| 3    | Verify navigation bar is present           | `<nav>` element is visible                                |
+| 4    | Verify India nav link is present           | Link with text `India` visible in nav                     |
+| 5    | Verify Opinion nav link is present         | Link with text `Opinion` visible in nav                   |
+
+**Expected Outcome:** NDTV home page loads with all nav links present.
+
+---
 
 ### TC02 — India Tab Navigation
 
-| Step | Action                                              | Expected Result                          |
-|------|-----------------------------------------------------|------------------------------------------|
-| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                          |
-| 2    | Click `India` link in navigation                    | Browser navigates to `/india`            |
-| 3    | Wait for page load                                  | Page title contains `India News`         |
-| 4    | Verify URL contains `/india`                        | URL = `https://www.ndtv.com/india`       |
+**Description:** Verify clicking the India tab loads the India news section.
+
+**Steps:**
+
+| Step | Action                                              | Expected Result                                       |
+|------|-----------------------------------------------------|-------------------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                                       |
+| 2    | Click `India` link in navigation                    | Browser navigates to `/india`                         |
+| 3    | Wait for page load                                  | Page title contains `India News`                      |
+| 4    | Verify URL contains `/india`                        | URL = `https://www.ndtv.com/india`                    |
+| 5    | Verify page content relevant to India news          | `<h1>` or heading with India-related content visible  |
+
+**Expected Outcome:** India page loads with title containing `India News`.
+
+---
 
 ### TC03 — Opinion Tab Navigation
 
-| Step | Action                                              | Expected Result                          |
-|------|-----------------------------------------------------|------------------------------------------|
-| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                          |
-| 2    | Click `Opinion` link in navigation                  | Browser navigates to `/opinion`          |
-| 3    | Wait for page load                                  | Page title contains `Opinion`            |
-| 4    | Verify URL contains `/opinion`                      | URL = `https://www.ndtv.com/opinion`     |
+**Description:** Verify clicking the Opinion tab loads the Opinion section.
+
+**Steps:**
+
+| Step | Action                                              | Expected Result                                       |
+|------|-----------------------------------------------------|-------------------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                                       |
+| 2    | Click `Opinion` link in navigation                  | Browser navigates to `/opinion`                       |
+| 3    | Wait for page load                                  | Page title contains `Opinion`                         |
+| 4    | Verify URL contains `/opinion`                      | URL = `https://www.ndtv.com/opinion`                  |
+| 5    | Verify page content relevant to opinions            | Opinion articles or heading visible                   |
+
+**Expected Outcome:** Opinion page loads with title containing `Opinion` or `NDTV Opinions`.
+
+---
 
 ### TC04 — Full AC1 Navigation Flow (Home → India → Opinion)
 
-| Step | Action                                              | Expected Result                          |
-|------|-----------------------------------------------------|------------------------------------------|
-| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads, title contains `NDTV`   |
-| 2    | Verify nav bar and India/Opinion links visible       | Both links present in nav                |
-| 3    | Click `India` in navigation                         | URL → `/india`, title contains `India`   |
-| 4    | Navigate back to `https://www.ndtv.com/`            | Home page reloads                        |
-| 5    | Click `Opinion` in navigation                       | URL → `/opinion`, title contains `Opinion`|
+**Description:** End-to-end test covering all AC1 acceptance criteria in sequence.
+
+**Steps:**
+
+| Step | Action                                              | Expected Result                                       |
+|------|-----------------------------------------------------|-------------------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads, title contains `NDTV`                |
+| 2    | Verify nav bar and India/Opinion links visible       | Both links present in nav                             |
+| 3    | Click `India` in navigation                         | URL → `/india`, title contains `India News`           |
+| 4    | Navigate back to `https://www.ndtv.com/`            | Home page reloads                                     |
+| 5    | Click `Opinion` in navigation                       | URL → `/opinion`, title contains `Opinion`            |
+
+**Expected Outcome:** Full sequential AC1 flow works without errors.
+
+---
 
 ### TC05 — Navigation Links Attribute Verification
 
-| Step | Action                                              | Expected Result                          |
-|------|-----------------------------------------------------|------------------------------------------|
-| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                          |
-| 2    | Inspect India link `href`                           | Contains `/india`                        |
-| 3    | Inspect Opinion link `href`                         | Contains `/opinion`                      |
+**Description:** Verify the India and Opinion navigation links have correct `href` attributes.
+
+**Steps:**
+
+| Step | Action                                              | Expected Result                                          |
+|------|-----------------------------------------------------|----------------------------------------------------------|
+| 1    | Navigate to `https://www.ndtv.com/`                 | Home page loads                                          |
+| 2    | Inspect India link `href`                           | Contains `/india`                                        |
+| 3    | Inspect Opinion link `href`                         | Contains `/opinion`                                      |
 
 ---
 
@@ -106,15 +148,16 @@ NDTV.com is a public news portal. Navigation tabs are rendered in a top navigati
 | Auth        | None (public site)          |
 | Browsers    | Firefox (primary), Chromium |
 | Framework   | Playwright + TypeScript     |
-| Timeout     | 60000 ms per test           |
+| Timeout     | 120000 ms per test          |
 
 ---
 
 ## Known Observations (from Exploratory Testing)
 
 1. **Navigation uses `m-nv_lnk` CSS class** — all primary nav links share this class.
-2. **No auth required** — NDTV is a public news portal.
+2. **No auth required** — NDTV is a public news portal, no cookies/session needed.
 3. **India and Opinion links use `pfrom` query param** — `?pfrom=home-ndtv_mainnavigation` on nav links.
 4. **Page title is reliable** — India page: contains `India News`; Opinion page: contains `Opinion`.
 5. **30 console errors on home page** — mostly ad-related (Google DFP, DoubleClick), not blocking.
 6. **Direct URL navigation is reliable** — `page.goto('https://www.ndtv.com/india')` works without the `pfrom` param.
+7. **Use `waitUntil: 'commit'` for sub-pages** — NDTV home page is ad-heavy and takes 40-50s with domcontentloaded.

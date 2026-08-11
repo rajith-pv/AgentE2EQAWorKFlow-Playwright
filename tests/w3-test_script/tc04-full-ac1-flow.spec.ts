@@ -8,9 +8,12 @@ import { test, expect } from '@playwright/test';
  * - THEN click India Tab
  * - AND click Opinion Tab
  *
- * HEAL NOTE: Using page.goto() instead of click() due to NDTV's ad-heavy
+ * HEAL NOTE (Round 2): Using page.goto() instead of click() due to NDTV's ad-heavy
  * page causing navigation click timeouts in Firefox.
- * Test timeout is 60s in playwright.config.ts.
+ *
+ * HEAL NOTE (Round 4): waitUntil: 'commit' used for sub-page navigation to reduce
+ * time spent waiting. Title/URL assertions use their own explicit timeouts.
+ * Test timeout is 120s in playwright.config.ts.
  */
 test.describe('TC04 — Full AC1 Navigation Flow (Home → India → Opinion)', () => {
   test('should complete the full AC1 flow: Home → India → back → Opinion', async ({ page }) => {
@@ -25,34 +28,34 @@ test.describe('TC04 — Full AC1 Navigation Flow (Home → India → Opinion)', 
     await expect(opinionLink).toBeAttached();
 
     // ── WHEN: Click on India Tab — use direct URL for reliability ──
-    await page.goto('https://www.ndtv.com/india', { waitUntil: 'domcontentloaded' });
+    await page.goto('https://www.ndtv.com/india', { waitUntil: 'commit' });
 
     // ── THEN: India page loads ──
-    await expect(page).toHaveTitle(/India/, { timeout: 30000 });
+    await expect(page).toHaveTitle(/India/, { timeout: 60000 });
     await expect(page).toHaveURL(/\/india/);
 
     // Navigate back to home
-    await page.goto('https://www.ndtv.com/', { waitUntil: 'domcontentloaded' });
-    await expect(page).toHaveTitle(/NDTV/, { timeout: 30000 });
+    await page.goto('https://www.ndtv.com/', { waitUntil: 'commit' });
+    await expect(page).toHaveTitle(/NDTV/, { timeout: 60000 });
 
     // ── AND: Click on Opinion Tab — use direct URL for reliability ──
-    await page.goto('https://www.ndtv.com/opinion', { waitUntil: 'domcontentloaded' });
+    await page.goto('https://www.ndtv.com/opinion', { waitUntil: 'commit' });
 
     // ── THEN: Opinion page loads ──
-    await expect(page).toHaveTitle(/Opinion/, { timeout: 30000 });
+    await expect(page).toHaveTitle(/Opinion/, { timeout: 60000 });
     await expect(page).toHaveURL(/\/opinion/);
   });
 
   test('should navigate India → home → Opinion in single session', async ({ page }) => {
-    await page.goto('https://www.ndtv.com/india', { waitUntil: 'domcontentloaded' });
-    await expect(page).toHaveTitle(/India/, { timeout: 30000 });
+    await page.goto('https://www.ndtv.com/india', { waitUntil: 'commit' });
+    await expect(page).toHaveTitle(/India/, { timeout: 60000 });
     await expect(page).toHaveURL(/\/india/);
 
-    await page.goto('https://www.ndtv.com/', { waitUntil: 'domcontentloaded' });
-    await expect(page).toHaveTitle(/NDTV/, { timeout: 30000 });
+    await page.goto('https://www.ndtv.com/', { waitUntil: 'commit' });
+    await expect(page).toHaveTitle(/NDTV/, { timeout: 60000 });
 
-    await page.goto('https://www.ndtv.com/opinion', { waitUntil: 'domcontentloaded' });
-    await expect(page).toHaveTitle(/Opinion/, { timeout: 30000 });
+    await page.goto('https://www.ndtv.com/opinion', { waitUntil: 'commit' });
+    await expect(page).toHaveTitle(/Opinion/, { timeout: 60000 });
     await expect(page).toHaveURL(/\/opinion/);
   });
 });

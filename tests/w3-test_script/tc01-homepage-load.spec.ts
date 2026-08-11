@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
  * Verifies the NDTV home page loads correctly with navigation links present.
  * No authentication required — public site.
  *
- * HEAL NOTE: NDTV is ad-heavy; test timeout increased to 60s in config.
+ * HEAL NOTE: NDTV is ad-heavy; test timeout increased to 120s in config.
  * waitUntil: 'domcontentloaded' used to avoid waiting for all ad scripts.
  */
 test.describe('TC01 — NDTV Home Page Load', () => {
